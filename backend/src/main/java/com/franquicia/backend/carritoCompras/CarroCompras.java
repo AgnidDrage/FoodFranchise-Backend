@@ -15,16 +15,12 @@ import javax.persistence.*;
 @Entity
 @Table
 public class CarroCompras {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_carrito")
     private Long id_carrito;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="id_producto", nullable = false)
-    private Producto id_producto;
-    private int cantidad;
+    @JoinColumn(name="menu", nullable = false)
+    private Producto menu;
     private double precio_unitario;
-    private double precio_total;
-
 }
