@@ -1,4 +1,4 @@
-package com.franquicia.backend.connection;
+/*package com.franquicia.backend.connection;
 
 import lombok.*;
 
@@ -14,3 +14,4 @@ public class FranquiciaDetalle implements Serializable {
     private String accion;
     private String grupo;
 }
+*/
