@@ -1,4 +1,3 @@
-from traceback import print_tb
 from flask import Flask, request
 
 
@@ -6,11 +5,10 @@ app = Flask(__name__)
 
 getUID = {
     "accion": "uuid",
-    "grupo": "Grupo 2 - Sanchez Toledo Mariano, Barroso Oriel"
+    "franquiciaID": "1234"
 }
 
-
-
+# noinspection PyInterpreter
 changeMenu = {
     "accion": "menu",
     "listado": [
@@ -36,10 +34,15 @@ changeMenu = {
 }
 
 
-@app.get('/api/authenticate/operaciones')
-def getUuid():
-    return getUID
-
+@app.post('/api/consulta')
+def consulta():
+    content_type = request.headers.get('Content-Type')
+    if (content_type == 'application/json'):
+        json = request.get_json()
+        print(json)
+        if json['franquiciaID'] == '1234':
+            return changeMenu
+        return 'Failed to auth'
 
 @app.post('/api/authenticate/operacionesPOST')
 def getByPostUuid():
@@ -48,3 +51,7 @@ def getByPostUuid():
         json = request.get_json()
         print(json)
         return getUID
+
+if __name__ == '__main__':
+    #app.create_app()
+    app.run(debug=True)
