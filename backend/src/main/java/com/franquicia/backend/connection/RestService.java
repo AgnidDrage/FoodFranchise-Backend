@@ -1,4 +1,4 @@
-package com.franquicia.backend.connection;
+/**package com.franquicia.backend.connection;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpHeaders;
 
 
-@Service
+//@Service
 public class RestService {
     private final RestTemplate restTemplate;
 
@@ -29,8 +29,8 @@ public class RestService {
         return data;
     }*/
 
-    @Bean
-    public FranquiciaDetalle postUuid() {
+    //@Bean
+    /*public FranquiciaDetalle postUuid() {
         String requestJson = "{\"accion\": \"uuid\", \"grupo\": \"Grupo X - Perez Pablo, Corvalán María\"}";
         String url = "http://127.0.0.1:5000/api/authenticate/operacionesPOST";
         HttpHeaders headers = new HttpHeaders(); //Instancia header
@@ -42,3 +42,4 @@ public class RestService {
         return data;
     }
 }
+**/

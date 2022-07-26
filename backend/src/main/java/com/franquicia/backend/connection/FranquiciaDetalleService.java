@@ -1,4 +1,4 @@
-package com.franquicia.backend.connection;
+/*package com.franquicia.backend.connection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +10,7 @@ public class FranquiciaDetalleService {
     @Autowired
     public FranquiciaDetalleService(FranquiciaDetalle franquiciaDetalle) {
         this.franquiciaDetalle = franquiciaDetalle;
-        System.out.println(franquiciaDetalle.getUuid());
+        //System.out.println(franquiciaDetalle.getUuid());
     }
 }
+*/
