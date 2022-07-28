@@ -47,4 +47,12 @@ def getByPostUuid():
     if (content_type == 'application/json'):
         json = request.get_json()
         print(json)
+<<<<<<< Updated upstream
         return getUID
+=======
+        return getUID
+
+if __name__ == '__main__':
+    #app.create_app()
+    app.run(debug=True)
+>>>>>>> Stashed changes
