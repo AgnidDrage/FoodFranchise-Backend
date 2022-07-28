@@ -1,5 +1,8 @@
-/**package com.franquicia.backend.connection;
+package com.franquicia.backend.connection;
 
+import com.franquicia.backend.franquicia.Franquicia;
+import lombok.Data;
+import lombok.ToString;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
@@ -9,37 +12,46 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpHeaders;
 
 
-//@Service
+@ToString
+@Service
 public class RestService {
     private final RestTemplate restTemplate;
 
-    private FranquiciaDetalle franquiciaDetalle;
-
-    public RestService(RestTemplateBuilder restTemplateBuilder){
+    public RestService(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
     }
 
 
 
     /*@Bean
-    public FranquiciaDetalle getUuid() {
+    public Franquicia getUuid() {
         String url = "http://127.0.0.1:5000/api/authenticate/operaciones";
-        FranquiciaDetalle data = this.restTemplate.getForObject(url, FranquiciaDetalle.class);
+        Franquicia data = this.restTemplate.getForObject(url, Franquicia.class);
         System.out.println(data);
         return data;
     }*/
 
-    //@Bean
-    /*public FranquiciaDetalle postUuid() {
-        String requestJson = "{\"accion\": \"uuid\", \"grupo\": \"Grupo X - Perez Pablo, Corvalán María\"}";
+    @Bean
+    public Franquicia postUuid() {
+        String requestJson = "{\"accion\": \"uuid\", \"grupo\": \"Grupo 2 - Sanchez Toledo Mariano, Barroso Oriel\"}";
         String url = "http://127.0.0.1:5000/api/authenticate/operacionesPOST";
         HttpHeaders headers = new HttpHeaders(); //Instancia header
         headers.setContentType(MediaType.APPLICATION_JSON); //Setea config header
 
         HttpEntity<String> entity = new HttpEntity<String>(requestJson, headers); //Empaqueta header y json en una entity
-        FranquiciaDetalle data = this.restTemplate.postForObject(url, entity, FranquiciaDetalle.class); //envia la entity, recive responce y mapea en FranquiciaDetalle
-        System.out.println(data);
+        Franquicia data = this.restTemplate.postForObject(url, entity, Franquicia.class); //envia la entity, recive responce y mapea en Franquicia
         return data;
     }
+
+    public String consultar(String uuid) {
+        String requestJson = String.format("{\"accion\": \"consulta\", \"franquiciaID\": \"%s\"}", uuid);
+        String url = "http://127.0.0.1:5000/api/consulta";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity(requestJson, headers);
+        String data = this.restTemplate.postForObject(url, entity, String.class);
+        return data;
+    }
+
+
 }
-**/
