@@ -3,6 +3,7 @@ package com.franquicia.backend.threads;
 import com.franquicia.backend.connection.RestService;
 import com.franquicia.backend.franquicia.Franquicia;
 import lombok.NoArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
