@@ -11,11 +11,12 @@ public class Reporte implements Executor{
     }
 
     @Override
-    public void method(JSONObject cuerpo1){
-        if(cuerpo1.get("accion").equals("reporte")){
+    public void method(JSONObject json){
+        if(json.get("accion").equals("reporte")) {
             System.out.println("Reporte");
+
         }else{
-            next.method(cuerpo1);
+            next.method(json);
         }
     }
 
