@@ -1,30 +1,40 @@
 package com.franquicia.backend.cadenaResponsabilidad;
 
+import com.franquicia.backend.producto.ProductoDTO;
+import com.franquicia.backend.producto.ProductoRepository;
+import com.franquicia.backend.producto.ProductoService;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Menu implements Executor{
 
     private Executor next;
+    private List<JSONObject> listaProductos;
 
     public Menu(Executor exe){
         this.next = exe;
+        this.listaProductos = new ArrayList<JSONObject>();
     }
-
     @Override
-    public void method(JSONObject cuerpo1){
-        System.out.println("accion " + cuerpo1.get("accion"));
-        if(cuerpo1.get("accion").equals("menu")){
-            System.out.println("Listado "+ cuerpo1.get("listado")); //Printeo el listado
-            JSONArray jarr = new JSONArray(cuerpo1.get("listado").toString());
+    public void method(JSONObject json){
+        if(json.get("accion").equals("menu")){
+            //System.out.println("accion " + json.get("accion"));
+            //System.out.println("Listado "+ json.get("listado")); //Printeo el listado
+            JSONArray jarr = new JSONArray(json.get("listado").toString());
+            for(int i=0; i<jarr.length();i++){
+                listaProductos.add(jarr.getJSONObject(i));
+            }
+            ProductoDTO productoDTO = new ProductoDTO().updateProductos(listaProductos);
+
+
             //Obtengo el listado. Para poder obtenerlo debo convertirlo a String. Esto es debido a
             //que es un Array Json
-            for (int i = 0; i < jarr.length(); i++) {
-                System.out.println(jarr.getJSONObject(i).getInt("precio"));
-                //Recorro el listado y obtengo los precios. A modo de ejemplo de como recorrer el array
-            }
         }else{
-            next.method(cuerpo1);
+            next.method(json);
         }
     }
 
