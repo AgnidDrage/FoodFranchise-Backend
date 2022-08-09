@@ -14,8 +14,8 @@ changeMenu = {
     "listado": [
         {
         "nombre": "menu1",
-        "descripcion": "Descripcion del menu 1",
-        "precio": 750.4,
+        "descripcion": "Descripcion del menu 1, me encanta el fulbo",
+        "precio": 500.4,
         "urlImagen": "http://imagen.com/img1"
         }
     ]
