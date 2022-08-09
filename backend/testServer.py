@@ -17,18 +17,6 @@ changeMenu = {
         "descripcion": "Descripcion del menu 1",
         "precio": 750.4,
         "urlImagen": "http://imagen.com/img1"
-        },
-        {
-        "nombre": "menu2",
-        "descripcion": "Descripcion del menu 2",
-        "precio": 650.4,
-        "urlImagen": "http://imagen.com/img2"
-        },
-        {
-        "nombre": "menu3",
-        "descripcion": "Descripcion del menu 3",
-        "precio": 850.4,
-        "urlImagen": "http://imagen.com/img3"
         }
     ]
 }
