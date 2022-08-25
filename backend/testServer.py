@@ -13,10 +13,16 @@ changeMenu = {
     "accion": "menu",
     "listado": [
         {
-        "nombre": "menu1",
-        "descripcion": "Descripcion del menu 1, me encanta el fulbo",
-        "precio": 500.4,
-        "urlImagen": "http://imagen.com/img1"
+            "nombre": "menu1",
+            "descripcion": "Son papas fritas",
+            "precio": 570,
+            "urlImagen": "http://imagen.com/img1"
+        },
+        {
+            "nombre": "menu6",
+            "descripcion": "Vegetariano",
+            "precio": 700.99,
+            "urlImagen": "http://imagen.com/img7"
         }
     ]
 }

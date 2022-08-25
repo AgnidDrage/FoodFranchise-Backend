@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.table.TableRowSorter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,17 +30,16 @@ public class Menu implements Executor{
         this.next = exe;
         this.listaProductos = new ArrayList<>();
         this.productoService = productoService;
-        this.productosViejos = new ArrayList<>();
-        this.productosActuales = new ArrayList<>();
+        this.productosViejos = new ArrayList<>(); //Productos que ya estan en la DB
+        this.productosActuales = new ArrayList<>(); //Productos que vienen en el JSOn
     }
     @Override
     public void method(JSONObject json){
         if(json.get("accion").equals("menu")){
-            JSONArray jarr = new JSONArray(json.get("listado").toString());
+            JSONArray jarr = new JSONArray(json.get("menus").toString());
             for(int i=0; i<jarr.length();i++){
                 listaProductos.add(jarr.getJSONObject(i));
             }
-            System.out.println("menu");
             castearJsonProducto(listaProductos);
             desactivarProductos();
             updateProductos();
@@ -56,6 +56,7 @@ public class Menu implements Executor{
     }
 
 
+    //Agrega o actualiza productos en la DB
     public void updateProductos (){
         List<Producto> productosActuales = this.productosActuales;
         productosActuales.forEach(producto -> {
@@ -64,7 +65,7 @@ public class Menu implements Executor{
             if (dbProducto.isPresent()) {
                 producto.setId(dbProducto.get().getId());
             }
-            producto.setEstado(true);
+            producto.setActivo(true);
             this.productoService.addProducto(producto);
         });
 
@@ -72,17 +73,19 @@ public class Menu implements Executor{
 
     public void desactivarProductos () {
         List<Producto> productosActuales = this.productosActuales;
-        List<Producto> productosActiv = this.productoService.productoByEstado(true);
+        List<Producto> productosActiv = this.productoService.productoByActivo(true);
         for (Producto prodAct : productosActiv) {
             Boolean shouldDeactivate = true;
+            System.out.println(prodAct);
             for (Producto producto : productosActuales) {
+
                 if (producto.getNombre().equals(prodAct.getNombre())) {
                     shouldDeactivate = false;
                     break;
                 }
             }
             if (shouldDeactivate) {
-                prodAct.setEstado(false);
+                prodAct.setActivo(false);
                 this.productoService.addProducto(prodAct);
             }
         }

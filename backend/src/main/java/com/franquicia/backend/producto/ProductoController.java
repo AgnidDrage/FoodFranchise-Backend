@@ -33,9 +33,9 @@ public class ProductoController {
         return productoService.productoByNombre(nombre);
     }
 
-    @GetMapping(path = "/api/productosByEstado/{estado}")
-    public List<Producto> getProductoByEstado(@PathVariable(value = "estado") Boolean estado){
-        return productoService.productoByEstado(estado);
+    @GetMapping(path = "/api/productosByEstado/{activo}")
+    public List<Producto> getProductoByActivo(@PathVariable(value = "activo") Boolean activo){
+        return productoService.productoByActivo(activo);
     }
 
     @PostMapping(path = "/api/addProducto/")
