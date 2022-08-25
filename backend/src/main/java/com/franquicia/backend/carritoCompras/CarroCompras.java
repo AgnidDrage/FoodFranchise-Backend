@@ -20,7 +20,7 @@ public class CarroCompras {
     @Column(name = "id_carrito")
     private Long id_carrito;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="menu", nullable = false)
-    private Producto menu;
+    @JoinColumn(name="menus", nullable = false)
+    private Producto menus;
     private double precio_unitario;
 }

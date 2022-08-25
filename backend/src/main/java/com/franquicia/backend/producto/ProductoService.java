@@ -24,7 +24,7 @@ public class ProductoService {
 
     public Optional<Producto> productoByNombre(String nombre) {return productoRepository.findByNombre(nombre);}
 
-    public List<Producto> productoByEstado(Boolean estado) {return productoRepository.findByEstado(estado);}
+    public List<Producto> productoByActivo(Boolean activo) {return productoRepository.findByActivo(activo);}
 
     public HttpStatus addProducto(Producto producto) {
         productoRepository.save(producto);
