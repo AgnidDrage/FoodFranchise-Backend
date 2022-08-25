@@ -1,8 +1,15 @@
 package com.franquicia.backend.producto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.franquicia.backend.venta.Venta;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,5 +26,11 @@ public class Producto {
     private String descripcion;
     private double precio;
     private String urlImagen;
-    private Boolean estado;
+    private Boolean activo;
+    private Timestamp creado;
+    private Timestamp actualizado;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "menus")
+    private Set<Venta> venta = new HashSet<>();
 }
