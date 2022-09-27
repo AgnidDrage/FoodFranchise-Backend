@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 public class ThreadConsulta extends Thread{
     private RestService restService;
     private Franquicia franquicia;
-
     private ProductoService productoService;
 
     @Autowired

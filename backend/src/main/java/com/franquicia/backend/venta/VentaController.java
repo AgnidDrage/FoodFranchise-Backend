@@ -1,9 +1,9 @@
 package com.franquicia.backend.venta;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,5 +25,10 @@ public class VentaController {
     }
 
     @PostMapping(path = "/api/addVenta")
-    public HttpStatus addVenta(@RequestBody Venta venta) { return  ventaService.addVenta(venta); }
+    public HttpStatus addVenta(@RequestBody Venta venta) { return  ventaService.addVenta(venta);}
+
+    @GetMapping(path = "/api/ventaByFecha")
+    public List<Venta> ventasByFecha(@RequestParam Timestamp fechaInicio, @RequestParam Timestamp fechaFinal){
+      return ventaService.ventasFecha(fechaInicio, fechaFinal);
+    };
 }
