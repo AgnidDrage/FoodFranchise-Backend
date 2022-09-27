@@ -31,6 +31,6 @@ public class Producto {
     private Timestamp actualizado;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "menus")
-    private Set<Venta> venta = new HashSet<>();
+    @OneToOne(mappedBy = "menu")
+    private Venta venta;
 }

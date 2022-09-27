@@ -5,10 +5,12 @@ import com.franquicia.backend.producto.Producto;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,10 +26,11 @@ public class Venta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ventaId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "producto_id", referencedColumnName = "id")
-    private Producto menus;
+    private Producto menu;
     private double precio;
-    private Timestamp fechaVenta = Timestamp.from(Instant.now());
+    //private Timestamp fechaVenta = Timestamp.from(Instant.now());
+    private Date fechaVenta = new Date();
 
 }
