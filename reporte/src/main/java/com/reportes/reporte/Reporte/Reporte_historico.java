@@ -2,14 +2,18 @@ package com.reportes.reporte.Reporte;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-public class Reporte {
-
+@Entity
+@Table
+@ToString
+public class Reporte_historico {
+    @Id
     private Long id;
     private String tipo;
     private Timestamp fechaInicio;

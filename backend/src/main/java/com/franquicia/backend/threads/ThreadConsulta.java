@@ -32,7 +32,7 @@ public class ThreadConsulta extends Thread{
                 JSONObject json = new JSONObject(data);
                 // formatear datos go here
                 //System.out.println(json);
-                Cliente cliente = new Cliente(this.productoService);
+                Cliente cliente = new Cliente(this.productoService, this.restService);
                 cliente.method(json);
                 ThreadConsulta.sleep(3600000);
             } catch (InterruptedException e) {
