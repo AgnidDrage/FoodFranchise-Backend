@@ -1,0 +1,7 @@
+Long id
+Date fechaI
+Date fechaF
+Bool done
+
+llega reporte historico --> si reporte es para ahora --> guardar reporte --> hacer reporte
+	      	 	--> si reporte es para futuro --> guardar reporte
