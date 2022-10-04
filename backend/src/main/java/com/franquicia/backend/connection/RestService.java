@@ -3,6 +3,7 @@ package com.franquicia.backend.connection;
 import com.franquicia.backend.franquicia.Franquicia;
 import lombok.Data;
 import lombok.ToString;
+import org.json.JSONObject;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
@@ -57,5 +58,13 @@ public class RestService {
         return data;
     }
 
+    public void sendReport(JSONObject json){
+        String data = json.toString();
+        String url = "http://localhost:8081/api/reporte";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity(data, headers);
+        this.restTemplate.postForObject(url, entity, String.class);
+    }
 
 }
