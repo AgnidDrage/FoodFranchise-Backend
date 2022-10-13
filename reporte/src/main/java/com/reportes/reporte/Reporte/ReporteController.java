@@ -20,6 +20,8 @@ public class ReporteController {
     @PostMapping(path="/api/reporte")
     public HttpStatus reporte(@RequestBody String reporte) {
         JSONObject data = new JSONObject(reporte);
+        // Cliente cliente = new Cliente();
+        // Para probar la cadena de responsabilidad: cliente.method(data);
         return reporteService.reporClassificator(data);
     }
 
