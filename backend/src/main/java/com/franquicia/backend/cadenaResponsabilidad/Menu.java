@@ -55,7 +55,6 @@ public class Menu implements Executor{
         }
     }
 
-
     //Agrega o actualiza productos en la DB
     public void updateProductos (){
         List<Producto> productosActuales = this.productosActuales;

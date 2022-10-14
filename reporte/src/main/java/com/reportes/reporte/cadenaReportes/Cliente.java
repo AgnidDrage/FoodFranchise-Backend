@@ -1,7 +1,9 @@
 package com.reportes.reporte.cadenaReportes;
 
 import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 
+@Service
 public class Cliente implements Executor {
 
     public Cliente(){
