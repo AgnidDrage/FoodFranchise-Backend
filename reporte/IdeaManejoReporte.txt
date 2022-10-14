@@ -5,3 +5,15 @@ Bool done
 
 llega reporte historico --> si reporte es para ahora --> guardar reporte --> hacer reporte
 	      	 	--> si reporte es para futuro --> guardar reporte
+
+
+
+LLega reporte a la cadena de resp. la cadena detecta si es historico o recurrente, para ambos casos si se debe inciar inmediatamente dicho reporte, la cadena lo guarda en la DB
+e instancia el hilo correspondiente para procesar dicho reporte. Si el reporte es a futuro, la cadena solo lo guarda en la DB, y el thread consultor eventualmente detectara que se debe hacer
+esos reportes e instanciara el hilo correspondiente.
+
+
+Hacer checkpoint para reporte recurrente, cada vez que se mande un reporte recurrente se debe guardar la fecha que lo mando para el caso de que el server se caiga
+Se debe recuperar esa fecha y calcular el proximo envio, si el envio ya deberia haber sucedido, se debe generar inmediantamente.
+
+Problemas: Como hacer para que el hilo consultor no instancie un hilo para procesar un reporte que ya esta siendo procesado.
