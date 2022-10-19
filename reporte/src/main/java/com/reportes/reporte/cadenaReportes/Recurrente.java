@@ -2,6 +2,8 @@ package com.reportes.reporte.cadenaReportes;
 
 import org.json.JSONObject;
 
+import java.text.ParseException;
+
 public class Recurrente implements Executor {
 
     private Executor next;
@@ -11,7 +13,7 @@ public class Recurrente implements Executor {
     }
 
     @Override
-    public void method(JSONObject json) {
+    public void method(JSONObject json) throws ParseException {
         if (json.getJSONObject("reporte").
                  getString("tipo").
                  equals("recurrente")) {

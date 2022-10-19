@@ -20,4 +20,10 @@ public class ReporteHistorico {
     private Date fechaFinal;
     private Boolean active = true;
     private Boolean procesando = false;
+
+    public  ReporteHistorico(Long id, Date fechaInicio, Date fechaFinal) {
+        this.id = id;
+        this.fechaInicio = fechaInicio;
+        this.fechaFinal = fechaFinal;
+    }
 }

@@ -25,7 +25,7 @@ public class ConsultorThread extends Thread {
     }
 
     @Override
-    public void run() {
+    public void run(){
         List<ReporteHistorico> reportesHistoricos = this.historicoService.findActives(true);
         List<ReporteRecurrente> reportesRecurrentes = this.recurrenteService.findRecurrenteByActive(true);
         reportesHistoricos.forEach(reporte -> {
@@ -40,12 +40,17 @@ public class ConsultorThread extends Thread {
         });
         while (true){
             try {
+                System.out.printf("Checkeando emn busqueda de reportes");
                 Date fechaActual = new Date();
                 reportesHistoricos = this.historicoService.findActives(true);
                 reportesRecurrentes = this.recurrenteService.findRecurrenteByActive(true);
                 reportesHistoricos.forEach(reporte -> {
                     if (reporte.getFechaInicio().compareTo(fechaActual) <= 0 && !reporte.getProcesando()) {
-                        System.out.println("Codigo que instancia hilo para procesar reporte historico");
+                        System.out.println("Generando hilo reporte historico");
+                        reporte.setId(reporte.getId());
+                        new HistoricoThread(reporte.getId(), this.historicoService, reporte.getFechaInicio(), reporte.getFechaFinal()).start();
+                        reporte.setProcesando(true);
+                        this.historicoService.addReporteHistorico(reporte);
                     }
                 });
                 reportesRecurrentes.forEach(reporteRec -> {
@@ -53,7 +58,7 @@ public class ConsultorThread extends Thread {
                         System.out.println("Codigo que instancia hilo para procesar reporte recurrente");
                     }
                 });
-                ConsultorThread.sleep(300000);
+                ConsultorThread.sleep(10000);
             } catch (RuntimeException | InterruptedException err) {
                 throw new RuntimeException(err);
             }

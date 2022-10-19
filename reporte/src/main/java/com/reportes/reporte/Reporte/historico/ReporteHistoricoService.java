@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReporteHistoricoService {
@@ -25,6 +26,10 @@ public class ReporteHistoricoService {
 
     public void addReporteHistorico(ReporteHistorico reporteHistorico) {
         this.repository.save(reporteHistorico);
+    }
+
+    public Optional<ReporteHistorico> findById(Long id) {
+        return this.repository.findById(id);
     }
 
 
