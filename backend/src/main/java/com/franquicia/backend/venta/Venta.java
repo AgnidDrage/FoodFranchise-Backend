@@ -20,7 +20,6 @@ import java.util.Set;
 @Setter
 @Entity
 @Table
-@ToString
 public class Venta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +28,7 @@ public class Venta {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "producto_id", referencedColumnName = "id")
     private Producto menu;
-    private double precio;
+    private Double precio;
     //private Timestamp fechaVenta = Timestamp.from(Instant.now());
     private Date fechaVenta = new Date();
 

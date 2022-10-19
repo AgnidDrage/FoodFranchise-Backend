@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+
 @Service
 public class ReporteService {
     private Cliente cliente;
@@ -19,7 +21,7 @@ public class ReporteService {
         this.consultorThread = consultorThread;
     }
 
-    public HttpStatus reporClassificator(JSONObject reporte) {
+    public HttpStatus reporClassificator(JSONObject reporte) throws ParseException {
         this.cliente.method(reporte);
         return HttpStatus.ACCEPTED;
     }

@@ -17,7 +17,6 @@ import java.util.Set;
 @Setter
 @Entity
 @Table
-@ToString
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
