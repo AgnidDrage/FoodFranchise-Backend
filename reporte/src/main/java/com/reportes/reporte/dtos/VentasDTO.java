@@ -6,6 +6,6 @@ import java.util.List;
 
 @Data
 public class VentasDTO {
-    private List<ventaDTO> ventas;
+    private List<VentaDTO> ventas;
 
 }

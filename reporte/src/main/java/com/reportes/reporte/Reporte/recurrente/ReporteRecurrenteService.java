@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReporteRecurrenteService {
@@ -28,4 +29,7 @@ public class ReporteRecurrenteService {
         this.repository.save(reporteRecurrente);
     }
 
+    public Optional<ReporteRecurrente> findById(Long id) {
+        return  repository.findById(id);
+    }
 }

@@ -2,6 +2,7 @@ package com.reportes.reporte.threads;
 
 import com.reportes.reporte.Reporte.historico.ReporteHistorico;
 import com.reportes.reporte.Reporte.historico.ReporteHistoricoService;
+import com.reportes.reporte.dtos.VentaDTO;
 import com.reportes.reporte.dtos.VentasDTO;
 import com.reportes.reporte.conection.RestService;
 import lombok.AllArgsConstructor;
@@ -31,8 +32,8 @@ public class HistoricoThread extends Thread{
 
     @Override
     public void run(){
-        VentasDTO ventaDTO = this.restService.getVentas(this.fechaInicio, this.fechaFinal);
-        List<com.reportes.reporte.dtos.ventaDTO> ventas = ventaDTO.getVentas();
+        VentasDTO ventasDTO = this.restService.getVentas(this.fechaInicio.toString(), this.fechaFinal.toString());
+        List<VentaDTO> ventas = ventasDTO.getVentas();
         List<JSONObject> productos = new ArrayList<>();
         ventas.forEach(venta -> {
             System.out.println(venta.toString());
