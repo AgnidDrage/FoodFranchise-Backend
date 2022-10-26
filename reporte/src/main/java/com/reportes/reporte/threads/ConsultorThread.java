@@ -40,7 +40,7 @@ public class ConsultorThread extends Thread {
         });
         while (true){
             try {
-                System.out.printf("Checkeando emn busqueda de reportes");
+                System.out.printf("Checkeando en busqueda de reportes");
                 Date fechaActual = new Date();
                 reportesHistoricos = this.historicoService.findActives(true);
                 reportesRecurrentes = this.recurrenteService.findRecurrenteByActive(true);
@@ -54,8 +54,12 @@ public class ConsultorThread extends Thread {
                     }
                 });
                 reportesRecurrentes.forEach(reporteRec -> {
-                    if (reporteRec.getFechaInicio().compareTo(fechaActual) <= 0 && !reporteRec.getProcesando()) {
-                        System.out.println("Codigo que instancia hilo para procesar reporte recurrente");
+                    if (reporteRec.getFechaCheckpoint().compareTo(fechaActual) <= 0 && !reporteRec.getProcesando()) {
+                        System.out.println("Generando reporte recurrente");
+                        reporteRec.setId(reporteRec.getId());
+                        new RecurrenteThread(reporteRec.getId(), this.recurrenteService, reporteRec.getFechaCheckpoint(), reporteRec.getFechaFinal(), reporteRec.getIntervalo()).start();
+                        reporteRec.setProcesando(true);
+                        this.recurrenteService.addReporteRecurrente(reporteRec);
                     }
                 });
                 ConsultorThread.sleep(10000);

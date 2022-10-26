@@ -16,9 +16,9 @@ import java.util.Date;
 public class RestService {
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public VentasDTO getVentas(Date fechaInicio, Date fechaFinal){
-        ObjectMapper mapper = new ObjectMapper();
-        String url = "http://localhost:8080/api/ventaByFecha?inicio="+fechaInicio.toString()+"&fin="+fechaFinal.toString();
+    public VentasDTO getVentas(String fechaInicio, String fechaFinal){
+        String url = "http://localhost:8080/api/ventaByFecha?inicio="+fechaInicio+"&fin="+fechaFinal;
+        System.out.println(url);
         VentasDTO response = this.restTemplate.getForObject(url, VentasDTO.class);
         return response;
     }

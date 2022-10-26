@@ -18,6 +18,7 @@ public class ReporteRecurrente {
     private Long id;
     private Date fechaInicio;
     private Date fechaFinal;
+    private Date fechaCheckpoint;
     private String intervalo;
     private Boolean active = true;
     private Boolean procesando = false;

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ventaDTO {
+public class VentaDTO {
     private Long ventaId;
     private MenuDTO menu;
     private String fechaVenta;
