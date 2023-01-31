@@ -5,12 +5,12 @@ import com.franquicia.backend.producto.ProductoService;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 @Service
-public class Cliente implements Executor {
+public class Manager implements Executor {
 
     private ProductoService productoService;
     private RestService restService;
 
-    public Cliente(ProductoService productoService, RestService restService){
+    public Manager(ProductoService productoService, RestService restService){
         this.productoService = productoService;
         this.restService = restService;
     }

@@ -38,11 +38,9 @@ public class RestService {
         String url = "http://10.101.102.1:8080/api/authenticate/obtener-uuid";
         HttpHeaders headers = new HttpHeaders(); //Instancia header
         headers.setContentType(MediaType.APPLICATION_JSON); //Setea config header
-        headers.setBearerAuth("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvcmllbGJhcnJvc28iLCJhdXRoIjoiIiwiZXhwIjoxOTc2ODE3MTY2fQ.SZ40no8SezkBd_7xa1QpSMVxlbaKtI_jKc8vE7VGCQliCKBcKWstKmUzzltsZqL_e27dDam-cHLNGK2EKM4dSg");
-
+        headers.setBearerAuth("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtdHNhbmNoZXoiLCJhdXRoIjoiIiwiZXhwIjoxOTkwNTU3MTAyfQ.PeW-rii2ONZlHATjEOva37V3Sdnc4cM5GdeUkDKCek251zBhGGwwNwGyx-Hq0Py-hkqclZ9mUnGaZOOzoX6SbQ");
         HttpEntity<String> entity = new HttpEntity<String>(requestJson, headers); //Empaqueta header y json en una entity
-        Franquicia data = this.restTemplate.postForObject(url, entity, Franquicia.class); //envia la entity, recive responce y mapea en Franquicia
-        System.out.println(data);
+        Franquicia data = this.restTemplate.postForObject(url, entity, Franquicia.class); //envia la entity, recibe responce y mapea en Franquicia
         return data;
     }
 
@@ -51,10 +49,9 @@ public class RestService {
         String url = "http://10.101.102.1:8080/api/accion";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvcmllbGJhcnJvc28iLCJhdXRoIjoiIiwiZXhwIjoxOTc2ODE3MTY2fQ.SZ40no8SezkBd_7xa1QpSMVxlbaKtI_jKc8vE7VGCQliCKBcKWstKmUzzltsZqL_e27dDam-cHLNGK2EKM4dSg");
+        headers.setBearerAuth("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtdHNhbmNoZXoiLCJhdXRoIjoiIiwiZXhwIjoxOTkwNTU3MTAyfQ.PeW-rii2ONZlHATjEOva37V3Sdnc4cM5GdeUkDKCek251zBhGGwwNwGyx-Hq0Py-hkqclZ9mUnGaZOOzoX6SbQ");
         HttpEntity<String> entity = new HttpEntity(requestJson, headers);
         String data = this.restTemplate.postForObject(url, entity, String.class);
-        System.out.println(data);
         return data;
     }
 

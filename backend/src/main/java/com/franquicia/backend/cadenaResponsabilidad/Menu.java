@@ -1,5 +1,6 @@
 package com.franquicia.backend.cadenaResponsabilidad;
 
+import com.franquicia.backend.logger.LoggingManager;
 import com.franquicia.backend.producto.Producto;
 import com.franquicia.backend.producto.ProductoService;
 import com.google.gson.Gson;
@@ -24,6 +25,7 @@ public class Menu implements Executor{
 
     private final List<Producto> productosActuales;
     private Producto producto;
+    private LoggingManager logger = new LoggingManager(Menu.class);
 
     @Autowired
     public Menu(Executor exe, ProductoService productoService){
@@ -40,6 +42,8 @@ public class Menu implements Executor{
             for(int i=0; i<jarr.length();i++){
                 listaProductos.add(jarr.getJSONObject(i));
             }
+            logger.warn("Actualizando productos.");
+            //Update process
             castearJsonProducto(listaProductos);
             desactivarProductos();
             updateProductos();
@@ -63,6 +67,8 @@ public class Menu implements Executor{
             Optional<Producto> dbProducto = this.productoService.productoByNombre(nombre);
             if (dbProducto.isPresent()) {
                 producto.setId(dbProducto.get().getId());
+            } else {
+                logger.warn("Se agrega producto a la base de datos: " + producto.getNombre());
             }
             producto.setActivo(true);
             this.productoService.addProducto(producto);
@@ -84,6 +90,7 @@ public class Menu implements Executor{
                 }
             }
             if (shouldDeactivate) {
+                logger.warn("Desactivando producto: " + prodAct.getNombre());
                 prodAct.setActivo(false);
                 this.productoService.addProducto(prodAct);
             }
