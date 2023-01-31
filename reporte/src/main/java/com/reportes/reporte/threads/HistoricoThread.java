@@ -5,6 +5,7 @@ import com.reportes.reporte.Reporte.historico.ReporteHistoricoService;
 import com.reportes.reporte.dtos.VentaDTO;
 import com.reportes.reporte.dtos.VentasDTO;
 import com.reportes.reporte.conection.RestService;
+import com.reportes.reporte.logger.LoggingManager;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

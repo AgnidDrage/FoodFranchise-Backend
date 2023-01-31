@@ -2,14 +2,13 @@ package com.franquicia.backend.producto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.franquicia.backend.venta.Venta;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor

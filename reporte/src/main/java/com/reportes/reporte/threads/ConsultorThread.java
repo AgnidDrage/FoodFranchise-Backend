@@ -4,6 +4,7 @@ import com.reportes.reporte.Reporte.historico.ReporteHistorico;
 import com.reportes.reporte.Reporte.historico.ReporteHistoricoService;
 import com.reportes.reporte.Reporte.recurrente.ReporteRecurrente;
 import com.reportes.reporte.Reporte.recurrente.ReporteRecurrenteService;
+import com.reportes.reporte.logger.LoggingManager;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class ConsultorThread extends Thread {
 
     private ReporteHistoricoService historicoService;
     private ReporteRecurrenteService recurrenteService;
+    private LoggingManager logger = new LoggingManager(ConsultorThread.class);
 
     @Autowired
     public  ConsultorThread(ReporteHistoricoService historicoService, ReporteRecurrenteService recurrenteService) {
@@ -40,13 +42,13 @@ public class ConsultorThread extends Thread {
         });
         while (true){
             try {
-                System.out.printf("Checkeando en busqueda de reportes");
+                logger.info("Buscando reportes para iniciar.");
                 Date fechaActual = new Date();
                 reportesHistoricos = this.historicoService.findActives(true);
                 reportesRecurrentes = this.recurrenteService.findRecurrenteByActive(true);
                 reportesHistoricos.forEach(reporte -> {
                     if (reporte.getFechaInicio().compareTo(fechaActual) <= 0 && !reporte.getProcesando()) {
-                        System.out.println("Generando hilo reporte historico");
+                        logger.warn("Procesando reporte historico.");
                         reporte.setId(reporte.getId());
                         new HistoricoThread(reporte.getId(), this.historicoService, reporte.getFechaInicio(), reporte.getFechaFinal()).start();
                         reporte.setProcesando(true);
@@ -55,7 +57,7 @@ public class ConsultorThread extends Thread {
                 });
                 reportesRecurrentes.forEach(reporteRec -> {
                     if (reporteRec.getFechaCheckpoint().compareTo(fechaActual) <= 0 && !reporteRec.getProcesando()) {
-                        System.out.println("Generando reporte recurrente");
+                        logger.warn("Procesando reporte recurrente.");
                         reporteRec.setId(reporteRec.getId());
                         new RecurrenteThread(reporteRec.getId(), this.recurrenteService, reporteRec.getFechaCheckpoint(), reporteRec.getFechaFinal(), reporteRec.getIntervalo()).start();
                         reporteRec.setProcesando(true);

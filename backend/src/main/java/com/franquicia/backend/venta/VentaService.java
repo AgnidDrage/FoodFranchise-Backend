@@ -1,5 +1,6 @@
 package com.franquicia.backend.venta;
 
+import com.franquicia.backend.logger.LoggingManager;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import java.util.Optional;
 @Service
 public class VentaService {
     private final VentaRepository ventaRepository;
+    private LoggingManager logger = new LoggingManager(VentaService.class);
 
     @Autowired
     public VentaService(VentaRepository ventaRepository) {
@@ -24,6 +26,7 @@ public class VentaService {
     public Optional<Venta> ventaById(Long id) { return ventaRepository.findById(id); }
 
     public HttpStatus addVenta(Venta venta) {
+        logger.info("Generando venta.");
         ventaRepository.save(venta);
         return HttpStatus.CREATED;
     }
