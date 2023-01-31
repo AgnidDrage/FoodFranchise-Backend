@@ -30,6 +30,5 @@ public class RestService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity(data, headers);
         //this.restTemplate.postForObject(url, entity, String.class);
-        System.out.println(data);
     }
 }

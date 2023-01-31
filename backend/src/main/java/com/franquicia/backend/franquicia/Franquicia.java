@@ -2,7 +2,7 @@ package com.franquicia.backend.franquicia;
 
 import lombok.*;
 
-        import java.io.Serializable;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor

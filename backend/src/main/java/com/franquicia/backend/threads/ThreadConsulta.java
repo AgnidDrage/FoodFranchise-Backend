@@ -1,8 +1,9 @@
 package com.franquicia.backend.threads;
 
-import com.franquicia.backend.cadenaResponsabilidad.Cliente;
+import com.franquicia.backend.cadenaResponsabilidad.Manager;
 import com.franquicia.backend.connection.RestService;
 import com.franquicia.backend.franquicia.Franquicia;
+import com.franquicia.backend.logger.LoggingManager;
 import com.franquicia.backend.producto.ProductoService;
 import lombok.NoArgsConstructor;
 
@@ -16,9 +17,10 @@ public class ThreadConsulta extends Thread{
     private RestService restService;
     private Franquicia franquicia;
     private ProductoService productoService;
+    private LoggingManager logger = new LoggingManager(ThreadConsulta.class);
 
     @Autowired
-    public  ThreadConsulta(RestService restService, Franquicia franquicia, Cliente cliente, ProductoService productoService) {
+    public  ThreadConsulta(RestService restService, Franquicia franquicia, ProductoService productoService) {
         this.restService = restService;
         this.franquicia = franquicia;
         this.productoService = productoService;
@@ -28,12 +30,11 @@ public class ThreadConsulta extends Thread{
     public void run() {
         while (true) {
             try {
+                logger.info("Consultando al servidor principal.");
                 String data = restService.consultar(franquicia.getFranquiciaID());
                 JSONObject json = new JSONObject(data);
-                // formatear datos go here
-                //System.out.println(json);
-                Cliente cliente = new Cliente(this.productoService, this.restService);
-                cliente.method(json);
+                Manager manager = new Manager(this.productoService, this.restService);
+                manager.method(json);
                 ThreadConsulta.sleep(3600000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
