@@ -4,27 +4,27 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reportes.reporte.dtos.VentasDTO;
 import lombok.Data;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Date;
-
-
 @Data
 public class RestService {
     private final RestTemplate restTemplate = new RestTemplate();
+    @Value("${server.backend}")
+    private String server_backend;
 
     public VentasDTO getVentas(String fechaInicio, String fechaFinal){
-        String url = "http://localhost:8080/api/ventaByFecha?inicio="+fechaInicio+"&fin="+fechaFinal;
+        String url = server_backend + "/ventaByFecha?inicio="+fechaInicio+"&fin="+fechaFinal;
         System.out.println(url);
         VentasDTO response = this.restTemplate.getForObject(url, VentasDTO.class);
         return response;
     }
 
     public void sendReporte (JSONObject reporte) {
-        String url = "http://10.101.102.1:8080/api/reporte/datos";
+        String url = server_backend + "/reporte/datos";
         String data = reporte.toString();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
