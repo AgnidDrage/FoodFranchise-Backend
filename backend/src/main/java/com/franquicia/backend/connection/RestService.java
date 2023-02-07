@@ -4,6 +4,7 @@ import com.franquicia.backend.franquicia.Franquicia;
 import lombok.Data;
 import lombok.ToString;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
@@ -17,6 +18,10 @@ import org.springframework.http.HttpHeaders;
 @Service
 public class RestService {
     private final RestTemplate restTemplate;
+    @Value("${server.principal.url}")
+    private String principal_server;
+    @Value("${server.principal.token}")
+    private String token;
 
     public RestService(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
@@ -35,10 +40,10 @@ public class RestService {
     @Bean
     public Franquicia postUuid() {
         String requestJson = "{\"accion\": \"uuid\", \"grupo\": \"Grupo 2 - Sanchez Mariano, Barroso Oriel\"}";
-        String url = "http://10.101.102.1:8080/api/authenticate/obtener-uuid";
+        String url = principal_server + "/authenticate/obtener-uuid";
         HttpHeaders headers = new HttpHeaders(); //Instancia header
         headers.setContentType(MediaType.APPLICATION_JSON); //Setea config header
-        headers.setBearerAuth("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtdHNhbmNoZXoiLCJhdXRoIjoiIiwiZXhwIjoxOTkwNTU3MTAyfQ.PeW-rii2ONZlHATjEOva37V3Sdnc4cM5GdeUkDKCek251zBhGGwwNwGyx-Hq0Py-hkqclZ9mUnGaZOOzoX6SbQ");
+        headers.setBearerAuth(token);
         HttpEntity<String> entity = new HttpEntity<String>(requestJson, headers); //Empaqueta header y json en una entity
         Franquicia data = this.restTemplate.postForObject(url, entity, Franquicia.class); //envia la entity, recibe responce y mapea en Franquicia
         return data;
@@ -46,10 +51,10 @@ public class RestService {
 
     public String consultar(String uuid) {
         String requestJson = String.format("{\"accion\": \"consulta\", \"franquiciaID\": \"%s\"}", uuid);
-        String url = "http://10.101.102.1:8080/api/accion";
+        String url = principal_server + "/accion";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtdHNhbmNoZXoiLCJhdXRoIjoiIiwiZXhwIjoxOTkwNTU3MTAyfQ.PeW-rii2ONZlHATjEOva37V3Sdnc4cM5GdeUkDKCek251zBhGGwwNwGyx-Hq0Py-hkqclZ9mUnGaZOOzoX6SbQ");
+        headers.setBearerAuth(token);
         HttpEntity<String> entity = new HttpEntity(requestJson, headers);
         String data = this.restTemplate.postForObject(url, entity, String.class);
         return data;
@@ -57,7 +62,7 @@ public class RestService {
 
     public void sendReport(JSONObject json){
         String data = json.toString();
-        String url = "http://localhost:8081/api/reporte";
+        String url = principal_server + "reporte";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity(data, headers);
