@@ -39,14 +39,19 @@ public class RestService {
 
     @Bean
     public Franquicia postUuid() {
-        String requestJson = "{\"accion\": \"uuid\", \"grupo\": \"Grupo 2 - Sanchez Mariano, Barroso Oriel\"}";
-        String url = principal_server + "/authenticate/obtener-uuid";
-        HttpHeaders headers = new HttpHeaders(); //Instancia header
-        headers.setContentType(MediaType.APPLICATION_JSON); //Setea config header
-        headers.setBearerAuth(token);
-        HttpEntity<String> entity = new HttpEntity<String>(requestJson, headers); //Empaqueta header y json en una entity
-        Franquicia data = this.restTemplate.postForObject(url, entity, Franquicia.class); //envia la entity, recibe responce y mapea en Franquicia
-        return data;
+        try {
+            String requestJson = "{\"accion\": \"uuid\", \"grupo\": \"Grupo 2 - Sanchez Mariano, Barroso Oriel\"}";
+            String url = principal_server + "/authenticate/obtener-uuid";
+            HttpHeaders headers = new HttpHeaders(); //Instancia header
+            headers.setContentType(MediaType.APPLICATION_JSON); //Setea config header
+            headers.setBearerAuth(token);
+            HttpEntity<String> entity = new HttpEntity<String>(requestJson, headers); //Empaqueta header y json en una entity
+            Franquicia data = this.restTemplate.postForObject(url, entity, Franquicia.class); //envia la entity, recibe responce y mapea en Franquicia
+            return data;
+        } catch (RuntimeException e) {
+            Franquicia franq = new Franquicia("nada", "1234");
+            return franq;
+        }
     }
 
     public String consultar(String uuid) {

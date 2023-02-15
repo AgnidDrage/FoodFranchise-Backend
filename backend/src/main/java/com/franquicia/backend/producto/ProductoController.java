@@ -38,7 +38,7 @@ public class ProductoController {
         return productoService.productoByActivo(activo);
     }
 
-    @PostMapping(path = "/api/addProducto/")
+    @PostMapping(path = "/api/addProducto")
     public HttpStatus addProducto(@RequestBody Producto producto){
         return productoService.addProducto(producto);
     }
