@@ -35,7 +35,7 @@ public class ThreadConsulta extends Thread{
                 JSONObject json = new JSONObject(data);
                 Manager manager = new Manager(this.productoService, this.restService);
                 manager.method(json);
-                ThreadConsulta.sleep(3600000);
+                ThreadConsulta.sleep(10000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
