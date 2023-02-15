@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,6 +30,6 @@ public class Producto {
     private Timestamp actualizado;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "menu")
-    private Venta venta;
+    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Venta> venta;
 }

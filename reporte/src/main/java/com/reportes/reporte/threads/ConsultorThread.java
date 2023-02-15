@@ -4,6 +4,7 @@ import com.reportes.reporte.Reporte.historico.ReporteHistorico;
 import com.reportes.reporte.Reporte.historico.ReporteHistoricoService;
 import com.reportes.reporte.Reporte.recurrente.ReporteRecurrente;
 import com.reportes.reporte.Reporte.recurrente.ReporteRecurrenteService;
+import com.reportes.reporte.conection.RestService;
 import com.reportes.reporte.logger.LoggingManager;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,13 @@ public class ConsultorThread extends Thread {
     private ReporteHistoricoService historicoService;
     private ReporteRecurrenteService recurrenteService;
     private LoggingManager logger = new LoggingManager(ConsultorThread.class);
+    private RestService restService;
 
     @Autowired
-    public  ConsultorThread(ReporteHistoricoService historicoService, ReporteRecurrenteService recurrenteService) {
+    public  ConsultorThread(ReporteHistoricoService historicoService, ReporteRecurrenteService recurrenteService, RestService restService) {
         this.historicoService = historicoService;
         this.recurrenteService = recurrenteService;
+        this.restService = restService;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class ConsultorThread extends Thread {
                     if (reporte.getFechaInicio().compareTo(fechaActual) <= 0 && !reporte.getProcesando()) {
                         logger.warn("Procesando reporte historico.");
                         reporte.setId(reporte.getId());
-                        new HistoricoThread(reporte.getId(), this.historicoService, reporte.getFechaInicio(), reporte.getFechaFinal()).start();
+                        new HistoricoThread(reporte.getId(), this.historicoService, this.restService, reporte.getFechaInicio(), reporte.getFechaFinal()).start();
                         reporte.setProcesando(true);
                         this.historicoService.addReporteHistorico(reporte);
                     }
