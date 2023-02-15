@@ -40,7 +40,7 @@ public class VentaController {
     @GetMapping(path = "/api/ventaByFecha")
     /*
     * Ejemplo para usar endpoint (Escribir URL de esa manera):
-    * http://localhost:8080/api/ventaByFecha?inicio=2022-08-24T12:12:12z&fin=2022-09-28T12:12:12z
+    * http://localhost:8080/api/ventaByFecha?inicio=2022-08-24 12:12:12&fin=2022-09-28 12:12:12
     */
     public String ventasByFecha(@RequestParam String inicio, @RequestParam String fin) throws ParseException {
         JSONObject data = new JSONObject();
