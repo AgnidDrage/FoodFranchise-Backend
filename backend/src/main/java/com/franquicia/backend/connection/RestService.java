@@ -20,6 +20,8 @@ public class RestService {
     private final RestTemplate restTemplate;
     @Value("${server.principal.url}")
     private String principal_server;
+    @Value("${server.reportes.url}")
+    private String reporte_server;
     @Value("${server.principal.token}")
     private String token;
 
@@ -67,7 +69,7 @@ public class RestService {
 
     public void sendReport(JSONObject json){
         String data = json.toString();
-        String url = principal_server + "reporte";
+        String url = reporte_server + "/reporte";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity(data, headers);

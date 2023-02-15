@@ -27,8 +27,8 @@ public class Venta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ventaId;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "producto_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "product_id", nullable = false)
     private Producto menu;
     private Double precio;
     //private Timestamp fechaVenta = Timestamp.from(Instant.now());

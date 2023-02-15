@@ -21,14 +21,15 @@ import java.util.Optional;
 public class HistoricoThread extends Thread{
     private Long reporteId;
     private ReporteHistoricoService reporteHistoricoService;
-    private final RestService restService = new RestService();
+    private final RestService restService;
     private final JSONObject reporte = new JSONObject();
     private Date fechaInicio;
     private Date fechaFinal;
 
     @Autowired
-    public HistoricoThread(ReporteHistoricoService reporteHistoricoService) {
+    public HistoricoThread(ReporteHistoricoService reporteHistoricoService, RestService restService) {
         this.reporteHistoricoService = reporteHistoricoService;
+        this.restService = restService;
     }
 
     @Override
