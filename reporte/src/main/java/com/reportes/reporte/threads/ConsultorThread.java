@@ -62,7 +62,7 @@ public class ConsultorThread extends Thread {
                     if (reporteRec.getFechaCheckpoint().compareTo(fechaActual) <= 0 && !reporteRec.getProcesando()) {
                         logger.warn("Procesando reporte recurrente.");
                         reporteRec.setId(reporteRec.getId());
-                        new RecurrenteThread(reporteRec.getId(), this.recurrenteService, reporteRec.getFechaCheckpoint(), reporteRec.getFechaFinal(), reporteRec.getIntervalo()).start();
+                        new RecurrenteThread(reporteRec.getId(), this.recurrenteService, this.restService, reporteRec.getFechaCheckpoint(), reporteRec.getFechaFinal(), reporteRec.getIntervalo()).start();
                         reporteRec.setProcesando(true);
                         this.recurrenteService.addReporteRecurrente(reporteRec);
                     }

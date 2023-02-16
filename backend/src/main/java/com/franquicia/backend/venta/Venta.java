@@ -5,16 +5,16 @@ import com.franquicia.backend.producto.Producto;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,6 +33,7 @@ public class Venta {
     private Double precio;
     //private Timestamp fechaVenta = Timestamp.from(Instant.now());
     private Date fechaVenta;
+    private String ventaToken = generateToken();
 
     {
         try {
@@ -50,8 +51,11 @@ public class Venta {
         cal.add(Calendar.HOUR_OF_DAY, -3);
         String fechaReal = cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) +1) + "-" + cal.get(Calendar.DATE) + " " + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND);
         return df.parse(fechaReal);
-
-
     }
-
+    private String generateToken(){
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
+    }
 }
+
+
