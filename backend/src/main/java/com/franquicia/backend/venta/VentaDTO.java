@@ -13,4 +13,5 @@ public class VentaDTO {
     private Long ventaId;
     private String fechaVenta;
     private JSONObject menu;
+    private String ventaToken;
 }

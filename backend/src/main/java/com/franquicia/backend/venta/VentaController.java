@@ -53,9 +53,10 @@ public class VentaController {
             Producto oldMenu = venta.getMenu();
             ProductoDTO menu = new ProductoDTO(oldMenu.getId(), oldMenu.getPrecio());
             Long id = venta.getVentaId();
+            String ventaToken = venta.getVentaToken();
             JSONObject menuJson = menu.toJson();
             String fechaVenta = venta.getFechaVenta().toString();
-            ventasJson.add(new JSONObject(new VentaDTO(id, fechaVenta, menuJson)));
+            ventasJson.add(new JSONObject(new VentaDTO(id, fechaVenta, menuJson, ventaToken)));
         });
         data.put("ventas", ventasJson);
         return data.toString();
