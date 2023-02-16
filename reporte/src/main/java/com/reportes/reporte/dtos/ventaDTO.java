@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class VentaDTO {
-    private Long ventaId;
     private MenuDTO menu;
     private String fechaVenta;
+
+    private String ventaToken;
 }

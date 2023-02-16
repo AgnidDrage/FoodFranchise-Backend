@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.*;
@@ -21,15 +22,16 @@ import java.util.*;
 public class RecurrenteThread extends Thread{
     private Long reporteId;
     private ReporteRecurrenteService recurrenteService;
-    private final RestService restService = new RestService();
+    private final RestService restService;
     private final JSONObject reporte = new JSONObject();
     private Date fechaCheckpoint;
     private Date fechaFinal;
     private String intervalo;
 
     @Autowired
-    public RecurrenteThread(ReporteRecurrenteService recurrenteService) {
+    public RecurrenteThread(ReporteRecurrenteService recurrenteService, RestService restService) {
         this.recurrenteService = recurrenteService;
+        this.restService = restService;
     }
     //"yyyy-MM-dd'T'HH:mm:ssZ"
 
@@ -42,8 +44,10 @@ public class RecurrenteThread extends Thread{
         Calendar calFuture = Calendar.getInstance();
         calPast.setTime(this.fechaCheckpoint);
         calFuture.setTime(this.fechaCheckpoint);
-        calPast.add(Calendar.HOUR_OF_DAY, -intervalo.toHoursPart());
-        calFuture.add(Calendar.HOUR_OF_DAY, intervalo.toHoursPart());
+        //calPast.add(Calendar.HOUR_OF_DAY, -intervalo.toHoursPart());
+        //calFuture.add(Calendar.HOUR_OF_DAY, intervalo.toHoursPart());
+        calPast = addIntervalToCalendar(calPast, intervalo.negated());
+        calFuture = addIntervalToCalendar(calFuture, intervalo);
         String pastTime = calPast.get(Calendar.YEAR) + "-" + (calPast.get(Calendar.MONTH) +1) + "-" + calPast.get(Calendar.DATE) + " " + calPast.get(Calendar.HOUR_OF_DAY) + ":" + calPast.get(Calendar.MINUTE) + ":" + calPast.get(Calendar.SECOND);
         String nextCheckpoint = calFuture.get(Calendar.YEAR) + "-" + (calFuture.get(Calendar.MONTH) +1) + "-" + calFuture.get(Calendar.DATE) + " " + calFuture.get(Calendar.HOUR_OF_DAY) + ":" + calFuture.get(Calendar.MINUTE) + ":" + calFuture.get(Calendar.SECOND);
         VentasDTO ventasDTO = this.restService.getVentas(pastTime, this.fechaCheckpoint.toString());
@@ -51,8 +55,8 @@ public class RecurrenteThread extends Thread{
         List<JSONObject> productos = new ArrayList<>();
         ventas.forEach(venta -> {
             JSONObject data = new JSONObject();
-            data.put("fecha", venta.getFechaVenta());
-            data.put("ventaId", venta.getVentaId());
+            data.put("fecha", changeDateFormat(venta.getFechaVenta()));
+            data.put("ventaId", venta.getVentaToken());
             data.put("menu", venta.getMenu().getId());
             data.put("precio", venta.getMenu().getPrecio());
             productos.add(data);
@@ -74,4 +78,37 @@ public class RecurrenteThread extends Thread{
 
     }
 
+    public Calendar addIntervalToCalendar(Calendar date, Duration interval) {
+        Calendar result = (Calendar) date.clone();
+        result.setTimeInMillis(result.getTimeInMillis() + interval.toMillis());
+        return result;
+    }
+
+    public String changeDateFormat(String dateString) {
+        try {
+            // Create a SimpleDateFormat object for the input format
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+
+            // Parse the input string into a Date object
+            Date date = inputFormat.parse(dateString);
+
+            // Create a Calendar object and set it to the UTC time zone
+            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+
+            // Set the calendar's date and time to the input date
+            calendar.setTime(date);
+
+            // Create a SimpleDateFormat object for the output format
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+            // Format the calendar's date and time as a string in the output format
+            String outputString = outputFormat.format(calendar.getTime());
+
+            // Return the output string
+            return outputString;
+        } catch (ParseException e) {
+            // Handle exception
+            return null;
+        }
+    }
 }

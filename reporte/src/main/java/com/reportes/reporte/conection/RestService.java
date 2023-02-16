@@ -2,6 +2,7 @@ package com.reportes.reporte.conection;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reportes.reporte.dtos.VentasDTO;
+import com.reportes.reporte.logger.LoggingManager;
 import lombok.Data;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,7 @@ public class RestService {
     private String server_principal;
     @Value("${token}")
     private String token;
+    private LoggingManager logger = new LoggingManager(RestService.class);
 
     public VentasDTO getVentas(String fechaInicio, String fechaFinal){
         System.out.println(server_backend);
@@ -33,20 +35,13 @@ public class RestService {
     public void sendReporte (JSONObject reporte) {
         String url = server_principal + "/reporte/datos";
         String data = reporte.toString();
-        //try {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(token);
         HttpEntity<String> entity = new HttpEntity(data, headers);
-        System.out.println(data);
-        System.out.println(reporte);
+        logger.info("Enviando: " + data);
         String response = this.restTemplate.postForObject(url, entity, String.class);
-        //}catch (RuntimeException e) {
-        //    System.out.println(e);
-        //    System.out.println("Fallo el envio");
-        //    System.out.println(data);
-        //}
-
+        logger.info(response);
     }
 
 }
